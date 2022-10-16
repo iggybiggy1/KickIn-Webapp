@@ -1,0 +1,113 @@
+:root{
+    --primary: rgba(58,175,74,0.95);
+    --secondary: rgba(255,255,255,0.85);
+    --cancel: rgba(252, 3, 40, 1);
+}
+
+/*mobile screen size*/
+@media only screen and (max-width:600px) {
+    body .input_and_buttons {
+        display: grid;
+        grid-template-rows: 50% 50%;
+        grid-template-columns: auto auto auto auto;
+        justify-content: space-around;
+        column-gap: 1vw;
+        row-gap: 2vh;
+    }
+
+    .header_child {
+        grid-column: auto;
+        font-size: 15px;
+    }
+
+    #searchorg, #searchev {
+        width: 30vw;
+    }
+
+    body .wrapper {
+        width: auto;
+    }
+}
+
+/*tablets */
+@media only screen and (min-width:601px) and (max-width: 797px) {
+    body .input_and_buttons {
+        display: grid;
+        grid-template-rows: 50% 50%;
+        grid-template-columns: auto auto auto auto;
+        justify-content: space-around;
+        column-gap: 1vw;
+        row-gap: 2vh;
+    }
+
+    .header_child {
+        grid-column: auto;
+    }
+}
+
+body {
+    background-color: var(--secondary);
+    font-family: 'Raleway', Arial, sans-serif;
+    margin: 0;
+    background-image: url("searchbackground.png");
+    background-size: cover;
+}
+
+button {
+    font-family: 'Raleway', Arial, sans-serif;
+    font-weight: bold;
+    height: 70%;
+    width: 90%;
+    place-self: center;
+}
+
+.Addorg:hover, .Addevent:hover{
+    opacity: 0.85;
+    color: var(--primary);
+    transition: 0.2s;
+}
+
+.Removeorg:hover, .Removeevent:hover{
+    opacity: 0.85;
+    color: var(--cancel);
+    transition: 0.2s;
+}
+
+input {
+    font-size: 20px;
+    font-family: 'Raleway', Arial, sans-serif;
+}
+
+label {
+    font-size: 20px;
+}
+
+.input_and_buttons {
+    display: grid;
+    grid-template-rows: 50% 50%;
+    grid-template-columns: 23% 2fr 1fr 1fr;
+    justify-content: space-around;
+    column-gap: 1vw;
+    row-gap: 2vh;
+}
+
+.grid_header {
+    margin: 0 auto;
+    display: inline-block;
+}
+
+.wrapper {
+    background-color: var(--secondary);
+    display: flex;
+    flex-direction: column;
+    width: 50vw;
+    height: 30vh;
+    justify-content: center;
+    margin: 0 auto;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    padding: 0 7% 2% 7%;
+}

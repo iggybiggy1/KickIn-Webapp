@@ -1,0 +1,272 @@
+:root{
+    --primary: rgba(58,175,74,0.95);
+    --secondary: rgba(255,255,255,0.85);
+}
+/*mmobile screen sizez*/
+@media only screen and (max-width:600px) {
+    body {
+        background-color: var(--secondary);
+        font-family: 'Raleway', Arial, sans-serif;
+        margin: 0;
+        background-image: url("searchbackground.png");
+        background-size: cover;
+    }
+
+    button {
+        cursor: pointer;
+        color: white;
+        padding: 10px 16px;
+        margin: 6px 0;
+        border: none;
+        width: 100%;
+    }
+
+    button:hover {
+        opacity: 0.85;
+    }
+
+    h1 {
+        margin: 0 auto;
+        font-weight: bolder;
+        padding: 6px 6px;
+    }
+
+    input {
+        height: 25px;
+        width: 130px;
+        font-size: 10px;
+        font-family: 'Raleway', Arial, sans-serif;
+    }
+
+    label {
+        font-size: 16px;
+    }
+
+    .container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        padding-top: 8px;
+        align-content: center;
+        align-items: center;
+    }
+
+    .submitbutton {
+        width: auto;
+        padding: 6px 14px;
+        background-color: var(--primary);
+        margin-bottom: 11px;
+        font-family: 'Raleway', Arial, sans-serif;
+    }
+
+    .form-div {
+        display: block;
+        text-align: center;
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        background-color: var(--secondary);
+        padding: 0 100px 20px;
+    }
+
+    .header {
+        text-align: center;
+        background-color: var(--primary);
+        overflow: hidden;
+        margin: 0;
+    }
+}
+/*tablet screen size*/
+@media only screen and (min-width:601px) and (max-width: 797px) {
+    body {
+        background-color: var(--secondary);
+        font-family: 'Raleway', Arial, sans-serif;
+        margin: 0;
+        background-image: url("searchbackground.png");
+        background-size: cover;
+    }
+
+    button {
+        cursor: pointer;
+        color: white;
+        padding: 11px 18px;
+        margin: 6px 0;
+        border: none;
+        width: 100%;
+    }
+
+    button:hover {
+        opacity: 0.85;
+    }
+
+    h1 {
+        margin: 0 auto;
+        font-weight: bolder;
+        padding: 8px 8px;
+    }
+
+    input {
+        height: 30px;
+        width: 180px;
+        font-size: 16px;
+        font-family: 'Raleway', Arial, sans-serif;
+    }
+
+    label {
+        font-size: 16px;
+    }
+
+    .container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        padding-top: 10px;
+        align-content: center;
+        align-items: center;
+    }
+
+    .submitbutton {
+        width: auto;
+        padding: 8px 15px;
+        background-color: var(--primary);
+        margin-bottom: 12px;
+        font-family: 'Raleway', Arial, sans-serif;
+    }
+
+    .form-div {
+        display: block;
+        text-align: center;
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        background-color: var(--secondary);
+        padding: 0 80px 16px;
+    }
+
+    .header {
+        text-align: center;
+        background-color: var(--primary);
+        overflow: hidden;
+        margin: 0;
+    }
+
+    span.psw {
+        float: right;
+        padding-top: 12px;
+    }
+
+    #psw-label {
+        padding-top: 8px;
+    }
+
+    #password-input {
+        margin-bottom: 8px;
+    }
+
+    #login {
+        font-size: 30px;
+    }
+}
+/*laptop / monitor screensize */
+@media only screen and (min-width: 798px) {
+    body {
+        background-color: var(--secondary);
+        font-family: 'Raleway', Arial, sans-serif;
+        margin: 0;
+        background-image: url("searchbackground.png");
+        background-size: cover;
+    }
+
+    button {
+        cursor: pointer;
+        color: white;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        width: 100%;
+    }
+
+    button:hover {
+        opacity: 0.85;
+    }
+
+    h1 {
+        margin: 0 auto;
+        font-weight: bolder;
+        padding: 10px 10px;
+    }
+
+    input {
+        height: 40px;
+        width: 230px;
+        font-size: 20px;
+        font-family: 'Raleway', Arial, sans-serif;
+    }
+
+    label {
+        font-size: 20px;
+    }
+
+    .container {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        padding-top: 14px;
+        align-content: center;
+        align-items: center;
+    }
+
+    .submitbutton {
+        width: auto;
+        padding: 10px 18px;
+        background-color: var(--primary);
+        margin-bottom: 15px;
+        font-family: 'Raleway', Arial, sans-serif;
+    }
+
+    .form-div {
+        display: block;
+        text-align: center;
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        background-color: var(--secondary);
+        padding: 0 100px 20px;
+    }
+
+    .header {
+        text-align: center;
+        background-color: var(--primary);
+        overflow: hidden;
+        margin: 0;
+    }
+
+    span.psw {
+        float: right;
+        padding-top: 16px;
+    }
+
+    #psw-label {
+        padding-top: 10px;
+    }
+
+    #password-input {
+        margin-bottom: 10px;
+    }
+
+    #login {
+        font-size: 30px;
+    }
+}

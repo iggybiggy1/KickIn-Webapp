@@ -1,0 +1,18 @@
+-Added Users name(profile) to all pages
+-Added nessesary report files
+-Added css changes to some pages
+-Added unit testing
+-Made the app accessible for different screensizes
+-General bugfixes and refactoring
+-Deployed the project to the Previder server
+-Created new UI for the popup windows
+-Created "forgot password functionality"
+-Implemented security against SQLi and XSS
+-Added login error message
+-Implemented quality hashing of passwords
+-Fixed overflowing of tables in the webapp
+-Added accesslog
+-Fixed the menu
+-Generalized access level names, so capitalization does not matter anymore
+-Created download button
+-Changed the overall look and feel of the app

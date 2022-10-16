@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="searchPage.css">
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+  <title>Search Documents</title>
+  
+  <style>
+  	#user{
+  		font-family: Tahoma, Geneva, sans-serif;
+		font-size: 16px;
+		margin: 0px;
+		background-color: var(--primary);
+		
+  	}
+  	#username{
+  		width: 0 auto;
+  		text-align: center;
+  		font-weight: bold;
+  	}
+  </style>
+</head>
+
+<body>
+	<div class = "top-wrapper">
+	<div id="user"> <p id="username"> </p></div>
+		<div class="header">
+		  <h1>Kick-In Document Tool</h1>
+		</div>
+		<div class="dropdown">
+			<button class="dropbtn">Menu</button>
+			<div class="dropdown-content">
+				<a href="index.jsp" id="logout-button">Log Out</a>
+				<a href="admin.html" id="admin-button">Admin Page</a>
+				<a href="register.html" id="registerButton">Register page</a>
+			</div>
+		</div>
+	</div>
+
+	<div class="wrapper">
+		<div id ="query">
+		  <h2>Database Search</h2>
+		  <b>Find : </b>
+		  <div>
+			<input id="searchedInput" type="text" placeholder="Search..." onkeyup="loadMessages(event)">
+		  </div>
+		</div>
+	</div>
+	<div id="results">
+		<h2 id="foundMessages">Found Messages</h2>
+		<div id="SearchedMessages">
+			<p>No Messages found so far!</p>
+		</div>
+	</div>
+	
+	
+	
+	
+</body>
+
+
+<script>
+
+var myObj;
+
+function getUser() {
+	var xhr = new XMLHttpRequest();
+	
+	
+	xhr.onreadystatechange = function(){
+		var jsonData = JSON.parse(this.responseText);
+		document.getElementById("username").innerHTML = jsonData.fullname;
+
+	}
+	
+	xhr.open("GET", "http://localhost:8080/MavenKickIn/rest/users/getCurrentUser/", true);
+	xhr.send();
+};
+
+window.onload = function() {
+	getUser();
+	var xhr = new XMLHttpRequest();
+	let input = "";
+	
+	//XSS prevention ----------------------
+	input = input.replaceAll("<", "");
+	input = input.replaceAll(">", "");
+	
+	input = input.replaceAll("%3C", "")
+	input = input.replaceAll("%3E", "")
+	
+	input = input.replaceAll("&lt;", "")
+	input = input.replaceAll("&gt;", "")
+	//-------------------------------------
+	
+	xhr.onreadystatechange = function () {			
+		if (this.readyState === 4 && this.status === 200) {				
+			myObj = JSON.parse(this.responseText);				
+		    var txt = "";
+		    txt += "<table id=\"items-table\"><tr><th>ID</th><th>Send_at</th><th>SENDER</th><th>SUBJECT</th><th>OrgAccesses</th><th>EventAccesses</th><th>VIEW</th><th>DOWNLOAD</th><th>EDIT</th></tr>";			    
+		    for(var x = 0; x < myObj.length; ++x){			    
+			    var str1 = myObj[x].id;
+			    var str2 = myObj[x].sender;
+			    var str3 = myObj[x].subject;
+			    var str4 = myObj[x].sender_email;
+			    var str5 = myObj[x].content;
+			    var str6 = myObj[x].attachment;	
+			    var accOrg = myObj[x].accOrg;
+			    var accEvent = myObj[x].accEvent;
+			    var str7 = myObj[x].send_at;
+			    var str = str1 + str2 + str3 + str4 + str5 + str6; 				    				    
+			    if(str.toLowerCase().includes(input.toLowerCase())){				    	
+				    txt += "<tr><td>" + str1 + "</td>"+ 
+				    "<td>" + str7 + "</td>" +
+				    "<td>" + str2 + "</td><td>" + str3 + "</td>" + 
+				    "<td>" + accOrg + "</td>" + "<td>" + accEvent + "</td>" +
+				    "<td><button id=\"" + str1 + "\" onclick=\"View(myObj[" + x + "])\">View</button></td>" + 
+				    "<td><button id=\"" + str1 + "\" onclick=\"Download(myObj[" + x + "])\">Download</button></td>" + 
+				    "<td><button id=\"" + str1 + "\" onclick=\"EditAccess(myObj[" + x + "])\">Edit Access</td>" +
+				    "</tr>";				    	
+			    }			    	
+		    }
+		    txt += "</table>"  			   
+	        document.getElementById("SearchedMessages").innerHTML = txt;
+		}
+	}
+	xhr.open("GET", "http://localhost:8080/MavenKickIn/rest/search", true)
+	xhr.send();
+	
+	
+	
+};
+
+
+function loadMessages(event){
+	if(event.key === "Enter"){
+		
+		var xhr = new XMLHttpRequest();
+		let input = event.target.value;
+		
+		//XSS prevention ----------------------
+		input = input.replaceAll("<", "");
+		input = input.replaceAll(">", "");
+		
+		input = input.replaceAll("%3C", "")
+		input = input.replaceAll("%3E", "")
+		
+		input = input.replaceAll("&lt;", "")
+		input = input.replaceAll("&gt;", "")
+		//-------------------------------------
+		
+		xhr.onreadystatechange = function () {			
+			if (this.readyState === 4 && this.status === 200) {				
+				myObj = JSON.parse(this.responseText);				
+			    var txt = "";
+			    txt += "<table id=\"items-table\"><tr><th>ID</th><th>Send_at</th><th>SENDER</th><th>SUBJECT</th><th>OrgAccesses</th><th>EventAccesses</th><th>VIEW</th><th>DOWNLOAD</th><th>EDIT</th></tr>";			    
+			    for(var x = 0; x < myObj.length; ++x){			    
+				    var str1 = myObj[x].id;
+				    var str2 = myObj[x].sender;
+				    var str3 = myObj[x].subject;
+				    var str4 = myObj[x].sender_email;
+				    var str5 = myObj[x].content;
+				    var str6 = myObj[x].attachment;	
+				    var accOrg = myObj[x].accOrg;
+				    var accEvent = myObj[x].accEvent;
+				    var str7 = myObj[x].send_at;
+				    var str = str1 + str2 + str3 + str4 + str5 + str6; 				    				    
+				    if(str.toLowerCase().includes(input.toLowerCase())){				    	
+					    txt += "<tr><td>" + str1 + "</td>"+ 
+					    "<td>" + str7 + "</td>" +
+					    "<td>" + str2 + "</td><td>" + str3 + "</td>" + 
+					    "<td>" + accOrg + "</td>" + "<td>" + accEvent + "</td>" +
+					    "<td><button id=\"" + str1 + "\" onclick=\"View(myObj[" + x + "])\">View</button></td>" + 
+					    "<td><button id=\"" + str1 + "\" onclick=\"Download(myObj[" + x + "])\">Download</button></td>" + 
+					    "<td><button id=\"" + str1 + "\" onclick=\"EditAccess(myObj[" + x + "])\">Edit Access</td>" +
+					    "</tr>";				    	
+				    }			    	
+			    }
+			    txt += "</table>"  			   
+		        document.getElementById("SearchedMessages").innerHTML = txt;
+			}
+		}
+		xhr.open("GET", "http://localhost:8080/MavenKickIn/rest/search", true)
+		xhr.send();
+
+	}
+};
+
+
+
+function currentTime(Button, obj){
+	var today = new Date();
+	var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+	var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+	var dateTime = " on " + date+' at '+time;
+	
+	
+	var str = " pressed on " + Button + " button " + "of the message with id " + obj.id + dateTime;
+	
+	return str;
+
+	
+	
+};
+
+
+
+function sendLog(log){
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {	
+		if (this.readyState === 4 && this.status === 200) {	
+			
+		}
+	}
+
+	xhr.open("POST", "http://localhost:8080/MavenKickIn/rest/search/Log/" + log, true)
+	xhr.send();
+	
+};
+
+
+
+function downloadlink(link) {
+	  var element = document.createElement('a');
+	  element.setAttribute('href', link);
+	  element.setAttribute('download', link);
+
+	  element.style.display = 'none';
+	  document.body.appendChild(element);
+
+	  element.click();
+
+	  document.body.removeChild(element);
+};
+
+function downloadattachment(obj){
+	var a = obj.attachment;
+	if(a.split(":")[1] == "0"){		
+	} else if(a.split(":")[1] == "1"){	
+		var a1 = unserialize(a)[0]
+		var a1l = a1.split("/")
+		var link = a1l[a1l.length - 1];
+		var Alink1 = "attachments/" + link;		
+		downloadlink(Alink1);
+	} else if(a.split(":")[1] == "2"){
+		var a1 = unserialize(a)[0]
+		var a1l = a1.split("/")
+		var a2 = unserialize(a)[1]
+		var a2l = a2.split("/")
+		
+		var link1 = a1l[a1l.length - 1];
+		var link2 = a2l[a2l.length - 1];
+		var Alink1 = "attachments/" + link1;
+		var Alink2 = "attachments/" + link2
+		downloadlink(Alink1);
+		downloadlink(Alink2);
+	} 
+};
+
+
+function downloadcontent(obj){
+	  var element = document.createElement('a');
+	  element.setAttribute('id', "dcontent");
+	  element.innerHTML = obj.content
+	  element.style.display = 'none';
+	  document.body.appendChild(element);
+	  element.click();
+	  
+	  var prtContent = document.getElementById('dcontent');
+      var WinPrint = window.open('', '', 'width=800,height=650,scrollbars=1,menuBar=1');
+      var str =  prtContent.innerHTML;
+      WinPrint.document.write(str);
+      WinPrint.document.close();
+      WinPrint.focus();
+      WinPrint.print()
+      WinPrint.close()
+
+	  document.body.removeChild(element);
+}
+
+ 
+function Download(obj){
+	var log = currentTime("Download", obj)
+	sendLog(log)
+	
+	downloadattachment(obj);
+	downloadcontent(obj);
+	
+};
+
+
+
+function View(obj){
+	var log = currentTime("View", obj)
+	sendLog(log)
+	
+	var myWindow = window.open("", "MsgWindow", "width=1024,height=768");  
+	
+	
+	var a = obj.attachment;
+	if(a.split(":")[1] == "0"){
+		myWindow.document.write(obj.content);
+	} else if(a.split(":")[1] == "1"){	
+		var a1 = unserialize(a)[0]
+		var a1l = a1.split("/")
+		var blank = "_blank "
+		var target = " target=" + blank
+		
+		if(a1l[a1l.length - 1].includes("png")){
+			myWindow.document.write(obj.content + "<div><h2>Attachments</h2>" + "<p>" + "<a href=attachments/" + a1l[a1l.length - 1] + " " + target + " >" + a1l[a1l.length - 1] + "</a>" + "</p>" + "</div>");
+		} else {
+			myWindow.document.write(obj.content + "<div><h2>Attachments</h2>" + "<p>" + "<a href=attachments/" + a1l[a1l.length - 1] + " " + target + " >" + a1l[a1l.length - 1] + "</a>" + "</p>" 
+					 + "<p>" + "<a href=https://docs.google.com/gview?url=http://kick-in-5.paas.hosted-by-previder.com/MavenKickIn/attachments/" + a1l[a1l.length - 1] + "&embedded=true" + " " + target + " > Preview file: " + a1l[a1l.length - 1] + "</a>" + "</p>" +  "</div>");
+		}
+	} else if(a.split(":")[1] == "2"){
+		var a1 = unserialize(a)[0]
+		var a1l = a1.split("/")
+		var a2 = unserialize(a)[1]
+		var a2l = a2.split("/")
+		var blank = "_blank "
+		var target = " target=" + blank
+		
+		if(a1l[a1l.length - 1].includes("png") && a2l[a2l.length - 1].includes("png")){
+			myWindow.document.write(obj.content + "<div><h2>Attachments</h2>" + "<p>" + "<a href=" + a1l[a1l.length - 1] + " " + target + " >" + a1l[a1l.length - 1] + "</a>" 
+					+ "</p>" + "<p>" + "<a href=" + a2l[a2l.length - 1] + " " + target + " >" + a2l[a2l.length - 1] + "</a>" + "</p>" +"</div>");
+		} else if(a1l[a1l.length - 1].includes("png") && !a2l[a2l.length - 1].includes("png")){
+			myWindow.document.write(obj.content + "<div><h2>Attachments</h2>" + "<p>" + "<a href=attachments/" + a1l[a1l.length - 1] + " " + target + " >" + a1l[a1l.length - 1] + "</a>" 
+					+ "</p>" + "<p>" + "<a href=attachments/" + a2l[a2l.length - 1] + " " + target + " >" + a2l[a2l.length - 1] + "</a>" + "</p>" 
+					+ "<p>" + "<a href=https://docs.google.com/gview?url=http://kick-in-5.paas.hosted-by-previder.com/MavenKickIn/attachments/" + a2l[a2l.length - 1] + "&embedded=true" + " " + target + " > Preview file: " + a2l[a2l.length - 1] + "</a>" + "</p>" + "</div>");
+
+		} else if(!a1l[a1l.length - 1].includes("png") && a2l[a2l.length - 1].includes("png")){
+			myWindow.document.write(obj.content + "<div><h2>Attachments</h2>" + "<p>" + "<a href=attachments/" + a1l[a1l.length - 1] + " " + target + " >" + a1l[a1l.length - 1] + "</a>" 
+					+ "</p>" + "<p>" + "<a href=https://docs.google.com/gview?url=http://kick-in-5.paas.hosted-by-previder.com/MavenKickIn/attachments/" + a1l[a1l.length - 1] + "&embedded=true" + " " + target + " > Preview file: " + a1l[a1l.length - 1] + "</a>" + "</p>" 
+					+ "<p>" + "<a href=attachments/" + a2l[a2l.length - 1] + " " + target + " >" + a2l[a2l.length - 1] + "</a>" + "</p>"  + "</div>");
+			
+		} else {
+			myWindow.document.write(obj.content + "<div><h2>Attachments</h2>" + "<p>" + "<a href=attachments/" + a1l[a1l.length - 1] + " " + target + " >" + a1l[a1l.length - 1] + "</a>" 
+					+ "</p>" + "<p>" + "<a href=https://docs.google.com/gview?url=http://kick-in-5.paas.hosted-by-previder.com/MavenKickIn/attachments/" + a1l[a1l.length - 1] + "&embedded=true" + " " + target + " > Preview file: " + a1l[a1l.length - 1] + "</a>" + "</p>" 
+					+ "<p>" + "<a href=attachments/" + a2l[a2l.length - 1] + " " + target + " >" + a2l[a2l.length - 1] + "</a>" + "</p>" 
+					+ "<p>" + "<a href=https://docs.google.com/gview?url=http://kick-in-5.paas.hosted-by-previder.com/MavenKickIn/attachments/" + a2l[a2l.length - 1] + "&embedded=true" + " " + target + " > Preview file: " + a2l[a2l.length - 1] + "</a>" + "</p>" + "</div>");
+			
+		}
+		
+	}
+	myWindow.document.close()
+
+	
+	
+};
+ 
+function EditAccess(obj){
+	var id = obj.did
+	var value1 = id
+	var value2 = "DOC"
+	var queryString = "?para1=" + value1 + "&para2=" + value2;
+	var myWindow = window.open("DocAccess.html" + queryString, "MsgWindow", "width=1024,height=768");
+};
+
+function unserialize(data){  
+    // Takes a string representation of serialized string and returns String list   
+    // example: unserialize('a:3:{i:0;s:5:"JOHN";i:1;s:3:"van";i:2;s:9:"Zonneveld";}');  
+    // returns: ['JOHN', 'van', 'Zonneveld']    
+      
+    var error = function (type, msg, filename, line){throw new window[type](msg, filename, line);};  
+    var read_until = function (data, offset, stopchr){  
+        var buf = [];  
+        var chr = data.slice(offset, offset + 1);  
+        var i = 2;  
+        while(chr != stopchr){  
+            if((i+offset) > data.length){  
+                error('Error', 'Invalid');  
+            }  
+            buf.push(chr);  
+            chr = data.slice(offset + (i - 1),offset + i);  
+            i += 1;  
+        }  
+        return [buf.length, buf.join('')];  
+    };  
+    var read_chrs = function (data, offset, length){  
+        buf = [];  
+        for(var i = 0;i < length;i++){  
+            var chr = data.slice(offset + (i - 1),offset + i);  
+            buf.push(chr);  
+        }  
+        return [buf.length, buf.join('')];  
+    };  
+    var _unserialize = function (data, offset){  
+        if(!offset) offset = 0;  
+        var buf = [];  
+        var dtype = (data.slice(offset, offset + 1)).toLowerCase();  
+          
+        var dataoffset = offset + 2;  
+        var typeconvert = new Function('x', 'return x');  
+        var chrs = 0;  
+        var datalength = 0;  
+          
+        switch(dtype){  
+            case "i":  
+                typeconvert = new Function('x', 'return parseInt(x)');  
+                var readData = read_until(data, dataoffset, ';');  
+                var chrs = readData[0];  
+                var readdata = readData[1];  
+                dataoffset += chrs + 1;  
+            break;  
+            case "b":  
+                typeconvert = new Function('x', 'return (parseInt(x) == 1)');  
+                var readData = read_until(data, dataoffset, ';');  
+                var chrs = readData[0];  
+                var readdata = readData[1];  
+                dataoffset += chrs + 1;  
+            break;  
+            case "d":  
+                typeconvert = new Function('x', 'return parseFloat(x)');  
+                var readData = read_until(data, dataoffset, ';');  
+                var chrs = readData[0];  
+                var readdata = readData[1];  
+                dataoffset += chrs + 1;  
+            break;  
+            case "n":  
+                readdata = null;  
+            break;  
+            case "s":  
+                var ccount = read_until(data, dataoffset, ':');  
+                var chrs = ccount[0];  
+                var stringlength = ccount[1];  
+                dataoffset += chrs + 2;  
+                  
+                var readData = read_chrs(data, dataoffset+1, parseInt(stringlength));  
+                var chrs = readData[0];  
+                var readdata = readData[1];  
+                dataoffset += chrs + 2;  
+                if(chrs != parseInt(stringlength) && chrs != readdata.length){  
+                    error('SyntaxError', 'String length mismatch');  
+                }  
+            break;  
+            case "a":  
+                var readdata = {};  
+                  
+                var keyandchrs = read_until(data, dataoffset, ':');  
+                var chrs = keyandchrs[0];  
+                var keys = keyandchrs[1];  
+                dataoffset += chrs + 2;  
+                  
+                for(var i = 0;i < parseInt(keys);i++){  
+                    var kprops = _unserialize(data, dataoffset);  
+                    var kchrs = kprops[1];  
+                    var key = kprops[2];  
+                    dataoffset += kchrs;  
+                      
+                    var vprops = _unserialize(data, dataoffset);  
+                    var vchrs = vprops[1];  
+                    var value = vprops[2];  
+                    dataoffset += vchrs;  
+                      
+                    readdata[key] = value;  
+                }  
+                  
+                dataoffset += 1;  
+            break;  
+            default:  
+                error('SyntaxError', 'Unknown / Unhandled data type(s): ' + dtype);  
+            break;  
+        }  
+        return [dtype, dataoffset - offset, typeconvert(readdata)];  
+    };  
+    return _unserialize(data, 0)[2];  
+};
+
+
+
+</script>
+
+</html>
+
+
+
+

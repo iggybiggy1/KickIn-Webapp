@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<Context>
+	<Resource 
+	name="jdbc/postgres" 
+	auth="Container"
+    type="javax.sql.DataSource" 
+	driverClassName="org.postgresql.Driver"
+    url="jdbc:postgresql://bronto.ewi.utwente.nl/dab_di20212b_46?currentSchema=dab_di20212b_46"
+    username="dab_di20212b_46" 
+	password="5vPYBig3tFfM6Hpv"
+	maxTotal="20" 
+	maxIdle="30" 
+	maxWaitMillis="-1"/>
+
+</Context>

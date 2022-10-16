@@ -1,0 +1,468 @@
+:root{
+    --primary: rgba(58,175,74,0.95);
+    --secondary: rgba(255,255,255,0.85);
+    --menu: rgba(45, 134, 57,0.95);
+}
+/* mobile screen size */
+@media only screen and (max-width: 600px) {
+    body {
+        background-color: var(--secondary);
+        font-family: 'Raleway', Arial, sans-serif;
+        margin: 0;
+        background-image: url("searchbackground.png");
+        background-size: cover;
+        margin-block-start: 5px;
+
+    }
+
+    h1 {
+        margin: 0 auto;
+        font-weight: bolder;
+        padding: 6px 6px;
+    }
+
+    input {
+        height: 25px;
+        width: 130px;
+        font-size: 10px;
+        font-family: 'Raleway', Arial, sans-serif;
+    }
+
+    button {
+        font-family: 'Raleway', Arial, sans-serif;
+        font-weight: bold;
+    }
+
+    button:hover {
+        opacity: 0.95;
+    }
+
+    .header {
+        text-align: center;
+        background-color: var(--primary);
+        overflow: hidden;
+        margin: 0;
+        width: 83%;
+        float: left;
+        /*border-right: 1px solid black;*/
+    }
+
+    .dropbtn {
+        background-color: var(--menu);
+        color: black;
+        font-size: 8px;
+        border: none;
+        width: 100%;
+        height: 100%;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        width: 17%;
+        height: 35px;
+        z-index: 1000;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        width: 100%;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+        padding: 14px 0;
+    }
+
+    .dropdown-content a {
+        color: black;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+    }
+
+    .dropdown:hover {
+        opacity: 90%;
+    }
+
+    .dropdown-content a:hover {
+        color: var(--primary);
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+
+
+    .wrapper {
+        width: 55vw;
+        position: relative;
+        background-color: var(--secondary);
+        margin: 0 auto;
+    }
+
+    .top-wrapper {
+        width: 100%;
+        height: 35px;
+    }
+
+    #query {
+        margin: 14px;
+        width: 200px;
+
+        padding: 5px 0 12px;
+    }
+
+
+    #results {
+        position: relative;
+        width: 100vw;
+        height: 45vh;
+        background-color: var(--secondary);
+        margin: 0 auto;
+        display: flex;
+        flex-flow: column;
+    }
+    #search {
+        position: absolute;
+        top: 30px;
+        left: 0;
+        z-index: 11;
+        background: transparent;
+
+    }
+
+    #SearchedUsers {
+        margin-left: 14px;
+        overflow-x: auto;
+        overflow-y: auto;
+    }
+
+
+    #SearchedUsers td, #SearchedUsers th {
+        border: 1px solid #ddd;
+        padding: 4px;
+        width:50px;
+        height:25px;
+    }
+
+    #SearchedUsers tr:nth-child(even){background-color: #f2f2f2;}
+
+    #SearchedUsers tr:nth-child(odd){background-color: #a7c2ae;}
+
+
+    #foundUsers {
+        margin-left: 14px;
+        padding-top: 14px;
+    }
+}
+/* tablet screen size*/
+@media only screen and (min-width: 601px) and (max-width:797px ) {
+    body {
+        background-color: var(--secondary);
+        font-family: 'Raleway', Arial, sans-serif;
+        margin: 0;
+        background-image: url("searchbackground.png");
+        background-size: cover;
+
+
+    }
+
+    h1 {
+        margin: 0 auto;
+        font-weight: bolder;
+        padding: 9px 9px;
+    }
+
+    input {
+        height: 37.5px;
+        width: 190px;
+        font-size: 15px;
+        font-family: 'Raleway', Arial, sans-serif;
+    }
+
+    button {
+        font-family: 'Raleway', Arial, sans-serif;
+        font-weight: bold;
+    }
+
+    button:hover {
+        opacity: 0.95;
+    }
+
+    .header {
+        text-align: center;
+        background-color: var(--primary);
+        overflow: hidden;
+        margin: 0;
+        width: 83%;
+        float: left;
+
+    }
+
+    .dropbtn {
+        background-color: var(--menu);
+        color: black;
+        font-size: 12px;
+        border: none;
+        width: 100%;
+        height: 100%;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        width: 17%;
+        height: 50px;
+        z-index: 1000;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        width: 100%;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+        padding: 18px 0;
+    }
+
+    .dropdown-content a {
+        color: black;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+    }
+
+    .dropdown:hover {
+        opacity: 90%;
+    }
+
+    .dropdown-content a:hover {
+        color: var(--primary);
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+
+
+    .wrapper {
+        width: 65vw;
+        position: relative;
+        background-color: var(--secondary);
+        margin: 0 auto;
+    }
+
+    .top-wrapper {
+        width: 100%;
+        height: 50px;
+    }
+
+    #query {
+        margin: 20px;
+        width: 300px;
+        padding: 5px 0 15px;
+    }
+
+
+    #results {
+        position: relative;
+        width: 75vw;
+        height: 52vh;
+        background-color: var(--secondary);
+        margin: 0 auto;
+        display: flex;
+        flex-flow: column;
+    }
+
+    #search {
+        position: absolute;
+        top: 45px;
+        left: 0;
+        z-index: 11;
+        background: transparent;
+
+    }
+
+    #SearchedUsers {
+        margin-left: 20px;
+        overflow-x: auto;
+        overflow-y: auto;
+    }
+
+
+    #SearchedUsers td, #SearchedUsers th {
+        border: 2px solid #ddd;
+        padding: 8px;
+        width:75px;
+        height:35px;
+    }
+
+    #SearchedUsers tr:nth-child(even){background-color: #f2f2f2;}
+
+    #SearchedUsers tr:nth-child(odd){background-color: #a7c2ae;}
+
+
+    #foundUsers {
+        margin-left: 17px;
+        padding-top: 17px;
+    }
+}
+/* laptop /monitor screen size*/
+@media only screen and (min-width: 798px) {
+    body {
+        background-color: var(--secondary);
+        font-family: 'Raleway', Arial, sans-serif;
+        margin: 0;
+        background-image: url("searchbackground.png");
+        background-size: cover;
+    }
+
+    h1 {
+        margin: 0 auto;
+        font-weight: bolder;
+        padding: 10px 10px;
+    }
+
+    input {
+        height: 40px;
+        width: 230px;
+        font-size: 20px;
+        font-family: 'Raleway', Arial, sans-serif;
+    }
+
+    button {
+        font-family: 'Raleway', Arial, sans-serif;
+        font-weight: bold;
+    }
+
+    button:hover {
+        opacity: 0.95;
+    }
+
+    .header {
+        text-align: center;
+        background-color: var(--primary);
+        overflow: hidden;
+        margin: 0;
+        /*width: 90%;*/
+        /*float: left;*/
+        /*border-right: 1px solid black;*/
+    }
+
+    .dropbtn {
+        background-color: var(--menu);
+        color: black;
+        font-size: 16px;
+        border: none;
+        width: 100%;
+        height: 100%;
+        margin: 0;
+        font-weight: bold;
+    }
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+        width: 100%;
+        height: 100%;
+        z-index: 1000;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f1f1f1;
+        width: 100%;
+        box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+        z-index: 100;
+        padding: 20px 0;
+    }
+
+    .dropdown-content a {
+        color: black;
+        text-decoration: none;
+        display: block;
+        text-align: center;
+    }
+
+    .dropdown:hover {
+        opacity: 90%;
+    }
+
+    .dropdown-content a:hover {
+        color: var(--primary);
+    }
+
+    .dropdown:hover .dropdown-content {
+        display: block;
+    }
+
+
+
+    .wrapper {
+        width: 79vw;
+        position: relative;
+        background-color: var(--secondary);
+        margin: 0 auto;
+    }
+
+    .top-wrapper {
+        width: 100%;
+        height: 57.6px;
+        display: grid;
+   		grid-template-columns: 1fr 8fr 1fr;
+    }
+
+    #query {
+        margin: 20px;
+        width: 500px;
+        padding: 5px 0 20px;
+    }
+
+
+    #results {
+        position: relative;
+        width: 95vw;
+        height: 62vh;
+        background-color: var(--secondary);
+        margin: 0 auto;
+        display: flex;
+        flex-flow: column;
+    }
+
+    #search {
+        position: absolute;
+        top: 50px;
+        left: 0;
+        z-index: 11;
+        background: transparent;
+
+    }
+
+    #SearchedUsers {
+        margin: 0 auto;
+        overflow-x: auto;
+        overflow-y: auto;
+    }
+
+    #SearchedUsers td, #SearchedUsers th {
+        border: 1px solid #ddd;
+        padding: 4px;
+        width:100px;
+        height:50px;
+    }
+
+    #SearchedUsers tr:nth-child(even){background-color: #f2f2f2;}
+
+    #SearchedUsers tr:nth-child(odd){background-color: #a7c2ae;}
+
+    #foundUsers {
+        margin-left: 20px;
+        padding-top: 20px;
+    }
+
+}

@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="DocAccess.css">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+
+  <title>Database Admin</title>
+</head>
+
+<body>
+
+
+
+<div class="wrapper">
+    <div class="grid_header">
+        <h2>Manage Access-levels</h2>
+    </div>
+    <div class="input_and_buttons">
+        <h3>Organization : </h3>
+        <input id="searchorg" type="text" placeholder="Organization name ..." >
+        <button type="submit" class="Addorg" onclick="AddOrg()"> Add </button>
+        <button type="submit" class="Removeorg" onclick="RemoveOrg()"> Remove </button>
+        <h3> Event   : </h3>
+        <input id="searchev" type="text" placeholder="Event name ..." >
+        <button type="submit" class="Addevent" onclick="AddEvent()"> Add </button>
+        <button type="submit" class="Removeevent" onclick="RemoveEvent()"> Remove </button>
+    </div>
+</div>
+
+
+
+</body>
+
+<script>
+
+var queryString = decodeURIComponent(window.location.search);
+queryString = queryString.substring(1);
+var queries = queryString.split("&");
+var p1 = queries[0].split("=");
+var i = p1[1];
+
+function AddOrg(){
+	var xhr = new XMLHttpRequest();
+	var x = document.getElementById("searchorg").value
+	
+	//XSS prevention ----------------------
+	x = x.replaceAll("<", "");
+	x = x.replaceAll(">", "");
+	
+	x = x.replaceAll("%3C", "")
+	x = x.replaceAll("%3E", "")
+	
+	x = x.replaceAll("&lt;", "")
+	x = x.replaceAll("&gt;", "")
+	//-------------------------------------
+	
+	xhr.onreadystatechange = function () {			
+		if (this.readyState === 4 && this.status === 200) {	
+
+		}
+	}
+	alert("Organization " + x + " is being added to Accesses");
+	var d = i + "~" + x;
+	xhr.open("POST", "http://localhost:8080/MavenKickIn/rest/search/org/" + d, true)
+	xhr.send();
+	
+};
+
+function AddEvent(){
+	var xhr = new XMLHttpRequest();
+	var x = document.getElementById("searchev").value
+	
+	//XSS prevention ----------------------
+	x = x.replaceAll("<", "");
+	x = x.replaceAll(">", "");
+	
+	x = x.replaceAll("%3C", "")
+	x = x.replaceAll("%3E", "")
+	
+	x = x.replaceAll("&lt;", "")
+	x = x.replaceAll("&gt;", "")
+	//-------------------------------------
+	
+	xhr.onreadystatechange = function () {			
+		if (this.readyState === 4 && this.status === 200) {	
+
+		}
+	}
+	alert("Event " + x + " is being added to Accesses");
+	var d = i + "~" + x;
+	xhr.open("POST", "http://localhost:8080/MavenKickIn/rest/search/event/" + d, true)
+	xhr.send();
+	
+};
+
+function RemoveOrg(){
+	var xhr = new XMLHttpRequest();
+	var x = document.getElementById("searchorg").value
+	
+	//XSS prevention ----------------------
+	x = x.replaceAll("<", "");
+	x = x.replaceAll(">", "");
+	
+	x = x.replaceAll("%3C", "")
+	x = x.replaceAll("%3E", "")
+	
+	x = x.replaceAll("&lt;", "")
+	x = x.replaceAll("&gt;", "")
+	//-------------------------------------
+	
+	xhr.onreadystatechange = function () {			
+		if (this.readyState === 4 && this.status === 200) {	
+
+		}
+	}
+	alert("Organization " + x + " is being deleted from Accesses");
+	var d = i + "~" + x;
+	xhr.open("DELETE", "http://localhost:8080/MavenKickIn/rest/search/org/" + d, true)
+	xhr.send();
+	
+};
+
+function RemoveEvent(){
+	var xhr = new XMLHttpRequest();
+	var x = document.getElementById("searchev").value
+	
+	//XSS prevention ----------------------
+	x = x.replaceAll("<", "");
+	x = x.replaceAll(">", "");
+	
+	x = x.replaceAll("%3C", "")
+	x = x.replaceAll("%3E", "")
+	
+	x = x.replaceAll("&lt;", "")
+	x = x.replaceAll("&gt;", "")
+	//-------------------------------------
+	
+	xhr.onreadystatechange = function () {			
+		if (this.readyState === 4 && this.status === 200) {	
+
+		}
+	}
+	alert("Event " + x + " is being deleted from Accesses");
+	var d = i + "~" + x;
+	xhr.open("DELETE", "http://localhost:8080/MavenKickIn/rest/search/event/" + d, true)
+	xhr.send();
+	
+};
+
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="admin.css">
+ 	 <link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+  
+  <title>User Database search</title>
+  <style>
+  	#user{
+  		font-family: Tahoma, Geneva, sans-serif;
+		font-size: 16px;
+		margin: 0px;
+		background-color: var(--primary);
+		
+  	}
+  	#username{
+  		width: 0 auto;
+  		text-align: center;
+  		font-weight: bold;
+  	}
+  </style>
+</head>
+
+<body>
+	<div class = "top-wrapper">
+		<div id="user"> <p id="username"> </p></div>
+		<div class="header">
+		  <h1>Kick-In Document Tool</h1>
+		</div>
+		<div class="dropdown">
+			<button class="dropbtn">Menu</button>
+			<div class="dropdown-content">
+				<a href="index.jsp" id="logout-button">Log Out</a>
+				<a href="search.html" id="searchPageButton">Search page</a>
+				<a href="register.html" id="registerButton">Register page</a>
+			</div>
+		</div>
+	</div>
+
+
+<div class="wrapper">
+	<div id ="query">
+	  <h2>User Database Search</h2>
+      <b>Find : </b>
+      <div>
+      	<input id="searchedInput" type="text" placeholder="Search..." onkeyup="loadUsers(event)">
+      </div>	
+	</div>
+</div>
+	
+	
+	
+<div id="results">
+	<h2 id="foundUsers">Found Users</h2>
+	<div id="SearchedUsers">
+		<p>No Users found so far!</p>
+	</div>
+</div>
+
+</body>
+
+<script>
+
+function getUser() {
+	var xhr = new XMLHttpRequest();
+
+
+	xhr.onreadystatechange = function(){
+		var jsonData = JSON.parse(this.responseText);
+		document.getElementById("username").innerHTML = jsonData.fullname;
+
+	}
+
+	xhr.open("GET", "http://localhost:8080/MavenKickIn/rest/users/getCurrentUser/", true);
+	xhr.send();
+};
+
+var myObj;
+
+window.onload = function() {
+	getUser();
+	var xhr = new XMLHttpRequest();
+	let input = "";
+	
+	//XSS prevention ----------------------
+	input = input.replaceAll("<", "");
+	input = input.replaceAll(">", "");
+	
+	input = input.replaceAll("%3C", "")
+	input = input.replaceAll("%3E", "")
+	
+	input = input.replaceAll("&lt;", "")
+	input = input.replaceAll("&gt;", "")
+	//-------------------------------------
+	
+	xhr.onreadystatechange = function () {			
+		if (this.readyState === 4 && this.status === 200) {				
+			myObj = JSON.parse(this.responseText);				
+		    var txt = "";
+		    txt += "<table id=\"items-table\"><tr><th>ID</th><th>NAME</th><th>EMAIL</th><th>Event Accesses</th><th>Organization Accesses</th><th>Delete User</th><th>Edit Access</th></tr>";
+		    for(var x = 0; x < myObj.length; x++){
+			    var str1 = myObj[x].id;
+			    var str2 = myObj[x].name;
+			    var str3 = myObj[x].email;
+			    var str4 = myObj[x].accessEvent;
+			    var str5 = myObj[x].accessOrg;
+			    
+			    var str = str2 + str3;
+			    
+			    if(str.toLowerCase().includes(input.toLowerCase())){
+				    txt+= "<tr>" + 
+				    "<td>" + str1 + "</td>" +
+				    "<td>" + str2 + "</td>" +
+				    "<td>" + str3 + "</td>" +
+				    "<td>" + str4 + "</td>" +
+				    "<td>" + str5 + "</td>" + 
+				    "<td><button id=\"" + str1 + "\" onclick=\"remove(myObj[" + x + "])\">Delete User</button></td>" +
+				    "<td><button id=\"" + str1 + "\" onclick=\"editAccess(myObj[" + x + "])\">Edit Access</button></td>" +
+				    "</tr>";
+			    }
+
+		    	
+		    }
+		
+		    txt += "</table>"  			   
+	        document.getElementById("SearchedUsers").innerHTML = txt;
+		}
+	}
+	xhr.open("GET", "http://localhost:8080/MavenKickIn/rest/users", true)
+	xhr.send();
+	
+
+};
+function loadUsers(event){
+	if(event.key === "Enter"){
+		
+		var xhr = new XMLHttpRequest();
+		let input = event.target.value;
+		
+		//XSS prevention ----------------------
+		input = input.replaceAll("<", "");
+		input = input.replaceAll(">", "");
+		
+		input = input.replaceAll("%3C", "")
+		input = input.replaceAll("%3E", "")
+		
+		input = input.replaceAll("&lt;", "")
+		input = input.replaceAll("&gt;", "")
+		//-------------------------------------
+		
+		xhr.onreadystatechange = function () {			
+			if (this.readyState === 4 && this.status === 200) {				
+				myObj = JSON.parse(this.responseText);				
+			    var txt = "";
+			    txt += "<table id=\"items-table\"><tr><th>ID</th><th>NAME</th><th>EMAIL</th><th>Event Accesses</th><th>Organization Accesses</th><th>Delete User</th><th>Edit Access</th></tr>";
+			    for(var x = 0; x < myObj.length; x++){
+				    var str1 = myObj[x].id;
+				    var str2 = myObj[x].name;
+				    var str3 = myObj[x].email;
+				    var str4 = myObj[x].accessEvent;
+				    var str5 = myObj[x].accessOrg;
+				    
+				    var str = str2 + str3;
+				    
+				    if(str.toLowerCase().includes(input.toLowerCase())){
+					    txt+= "<tr>" + 
+					    "<td>" + str1 + "</td>" +
+					    "<td>" + str2 + "</td>" +
+					    "<td>" + str3 + "</td>" +
+					    "<td>" + str4 + "</td>" +
+					    "<td>" + str5 + "</td>" + 
+					    "<td><button id=\"" + str1 + "\" onclick=\"remove(myObj[" + x + "])\">Delete User</button></td>" +
+					    "<td><button id=\"" + str1 + "\" onclick=\"editAccess(myObj[" + x + "])\">Edit Access</button></td>" +
+					    "</tr>";
+				    }
+
+			    	
+			    }
+			
+			    txt += "</table>"  			   
+		        document.getElementById("SearchedUsers").innerHTML = txt;
+			}
+		}
+		xhr.open("GET", "http://localhost:8080/MavenKickIn/rest/users", true)
+		xhr.send();
+
+	}
+};
+
+
+function remove(obj) {
+	
+	
+	var id = obj.id
+	var xhr = new XMLHttpRequest();
+	xhr.onreadystatechange = function () {			
+		if (this.readyState === 4 && this.status === 200) {
+				
+		}
+	}
+	
+	alert("User " + obj.name + " is being deleted");
+	xhr.open("DELETE", "http://localhost:8080/MavenKickIn/rest/users/" + id, true)
+	xhr.send();
+};
+
+function editAccess(obj) {
+	
+	var id = obj.id
+	var value1 = id
+	var value2 = "USER"
+	var queryString = "?para1=" + value1 + "&para2=" + value2;
+	var myWindow = window.open("UserAccess.html" + queryString, "MsgWindow", "width=1024,height=768");
+	
+};
+
+
+
+
+
+
+</script>
+</html>
+
+
+
+

@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<title>Password Recovery Kick-In</title>
+	<link rel="preconnect" href="https://fonts.gstatic.com">
+	<link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+	<link rel="stylesheet" href="passRecovery.css">
+</head>
+<body>
+
+<div id="login">
+    <h1>Password recovery: Email Authentication</h1>
+</div>
+
+<div class="form-div">
+        <div class="container">
+            <label class= 'text' for="email"><b>Provide your email for password recovery</b></label>
+            <p id='text2'>If no alert appears, then the provided email does not exist in our DataBase!</p>
+          		<div id='area'>
+          			 <input type="text" size="32" placeholder="Email address" name="email" id="email-input" required>
+				</div>
+	            <div id='button'>
+	           	 	 <button onclick = "getMailList()" class="submitbutton" >Send authentication code</button>
+	            </div>
+            
+        </div>
+
+	</div>
+
+</body>
+
+<script>
+
+function getMailList(){
+    let json = [];
+    let temp = "";
+    var x3 = document.getElementById("email-input").value 
+    let result = document.getElementById("email-input");
+    var xhr = new XMLHttpRequest();
+    var counter = 0;
+    xhr.onreadystatechange = function(){
+
+        if (this.readyState === 4 && this.status === 200) {
+                var jsonData = JSON.parse(this.responseText);
+                
+                for(i=0; i<jsonData.length; i++){
+                    json[i] = jsonData[i];
+                    let temp = json.join('');
+                    
+                    if(x3 === null || x3 === ""){
+                        alert("Please fill in your email address, to which the authorization code is to be sent!");
+                        break;
+                    }else if(x3.indexOf('<') !== -1 || x3.indexOf('>') !== -1){
+                        alert("Invalid character as input!");
+                        break;
+                    }else if(temp.indexOf(x3) === -1){
+                        counter++;
+                        if(counter == jsonData.length){
+                            alert("Email not found in the Database");
+                            break;
+                        }
+                        continue;
+                    }
+                    else if(temp.indexOf(x3) !== -1){
+                        alert("Mailbox found in the database, sending the verification code!")
+                        var recovery = x3;
+                        window.open("codePasswordRecovery.html",'_self');
+                        xhr.open("POST", "http://localhost:8080/MavenKickIn/rest/users/forgotPassword/" + recovery, true);
+                        xhr.send();
+                        break;
+                        
+                    }
+                    
+                    }
+                
+                
+
+        }
+   
+    }
+    xhr.open("GET", "http://localhost:8080/MavenKickIn/rest/search/emails/", true);
+    xhr.send();
+    
+};
+
+</script>
+</html>

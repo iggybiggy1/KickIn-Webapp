@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" name="viewport" content="width=device-width, initial-scale=1">
+    <title>Register New Person</title>
+    <link rel="stylesheet" href="register.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@300&display=swap" rel="stylesheet">
+    
+    
+    <style>
+  	#user{
+  		font-family: Tahoma, Geneva, sans-serif;
+		font-size: 16px;
+		margin: 0px;
+		background-color: var(--primary);
+		
+  	}
+  	#username{
+  		width: 0 auto;
+  		text-align: center;
+  		font-weight: bold;
+  	}
+  </style>
+  
+  
+</head>
+
+<body>
+<div class = "top-wrapper">
+<div id="user"> <p id="username"> </p></div>
+    <div class="header">
+        <h1>Kick-In Document Tool</h1>
+    </div>
+    <div class="dropdown">
+        <button class="dropbtn">Menu</button>
+        <div class="dropdown-content">
+            <a href="index.jsp" id="logout-button">Log Out</a>
+            <a href="search.html">Search Page</a>
+            <a href="admin.html" id="admin-button">Admin Page</a>
+        </div>
+    </div>
+</div>
+
+<div class="wrapper">
+	     <div class="container">
+            <h2>Register New Person</h2>
+            <label for="username-input"><b>Username:</b></label>
+            <input type="text" placeholder="Enter Username" name="uname" id="username-input"required>
+            <label for="password-input" id="psw-label"><b>Password:</b></label>
+            <input type="password" placeholder="Enter Password" name="psw" id="password-input" required>
+            <label for="email-input" id="email-label"><b>Email:</b></label>
+            <input type="text" placeholder="Enter Email-address" name="email" id="email-input" required>
+            <br>
+            <div class="flexSideToSide">
+                <label for="admincheckbox">Make this an admin account:</label>
+                <input type="checkbox" id="admincheckbox" name="Admin" value="IsAdmin">
+            </div>
+            <div class="flexSideToSide">
+                <button  onclick="location.href='admin.html'" class="backbutton">Admin page</button>
+				<button  onclick = "userRegister()" class = "submitbutton">Register</button>
+            </div>
+        </div>
+
+</div>
+</body>
+<script>
+
+var list;
+var EmailList;
+
+
+function getUser() {
+	var xhr = new XMLHttpRequest();
+	
+	
+	xhr.onreadystatechange = function(){
+		var jsonData = JSON.parse(this.responseText);
+		document.getElementById("username").innerHTML = jsonData.fullname;
+
+	}
+	
+	xhr.open("GET", "http://localhost:8080/MavenKickIn/rest/users/getCurrentUser/", true);
+	xhr.send();
+};
+
+
+function getUsers(){
+	var xhr = new XMLHttpRequest();
+	list = []
+	xhr.onreadystatechange = function () {			
+		if (this.readyState === 4 && this.status === 200) {				
+			myObj = JSON.parse(this.responseText);				
+		    
+			 for(i=0; i<myObj.length; i++){
+				 list[i] = myObj[i];
+			 }
+		 
+		}
+	}
+	xhr.open("GET", "http://localhost:8080/MavenKickIn/rest/users/usernames", true)
+	xhr.send();
+};
+
+
+function getEmails(){
+	var xhr = new XMLHttpRequest();
+	EmailList = []
+	xhr.onreadystatechange = function () {			
+		if (this.readyState === 4 && this.status === 200) {				
+			myObj = JSON.parse(this.responseText);				
+		    
+			 for(i=0; i<myObj.length; i++){
+				 EmailList[i] = myObj[i];
+			 }
+		 
+		}
+	}
+	xhr.open("GET", "http://localhost:8080/MavenKickIn/rest/users/OnlyEmails", true)
+	xhr.send();
+}
+
+window.onload = function(){
+	getUser();
+	getUsers();
+	getEmails();
+};
+
+function userRegister(){
+	var xhr = new XMLHttpRequest();
+	
+	
+	var x1 = document.getElementById("username-input").value
+	var x2 = document.getElementById("password-input").value
+	var x3 = document.getElementById("email-input").value 
+	var x4;
+	if(document.getElementById("admincheckbox").checked){
+		x4 = "True"
+	} else {
+		x4 = "False"
+	}
+	
+	if(list.includes(x1) || EmailList.includes(x3)){
+		
+		alert("Username or email taken try another")
+	} else {
+		
+		
+		xhr.onreadystatechange = function () {			
+			if (this.readyState === 4 && this.status === 200) {	
+			}
+		}
+		
+		
+		if(x1 === null || x2 === null || x3 === null || x1 === "" || x2 === "" || x3 === ""){
+			alert("Please fill in the forms")
+		} else if(x2.length < 8){
+			alert("Password length must be at least 8 characters")
+		} else {
+			var d = x1 + "~" + x2 + "~" + x3 + "~" + x4;
+			
+			//XSS prevention ----------------------
+			d = d.replaceAll("<", "");
+			d = d.replaceAll(">", "");
+			
+			d = d.replaceAll("%3C", "")
+			d = d.replaceAll("%3E", "")
+			
+			d = d.replaceAll("&lt;", "")
+			d = d.replaceAll("&gt;", "")
+			//-------------------------------------
+			alert("user " + x1 + " has been created");
+			xhr.open("POST", "http://localhost:8080/MavenKickIn/rest/users/create/" + d, true)
+			xhr.send();
+		}
+		
+	}
+
+
+};
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,211 @@
+:root{
+    --primary: rgba(58,175,74,0.95);
+    --secondary: rgba(255,255,255,0.85);
+}
+@media only screen and (max-width: 600px) {
+    body {
+        background-image: url("searchbackground.png");
+        font-family: 'Raleway', Arial, sans-serif;
+        margin: 0;
+        background-size: cover;
+    }
+
+    button, input, b {
+        font-family: 'Raleway', Arial, sans-serif;
+    }
+
+    #login {
+        text-align: center;
+        background-color: var(--primary);
+        overflow: hidden;
+        margin: 0;
+    }
+
+    .text {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.6px;
+        word-spacing: 1px;
+        text-align: justify;
+
+
+    }
+
+    #id2 {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 10px;
+        letter-spacing: 0.6px;
+        word-spacing: 1px;
+        text-align: center;
+
+    }
+
+    .container {
+        display: block;
+        text-align: center;
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        background-color: var(--secondary);
+        padding: 0 50px 10px;
+
+    }
+
+
+    #area {
+        text-align: center;
+        padding: 6px 10px;
+        margin: 8px 0;
+        box-sizing: border-box;
+    }
+
+    .submitbutton {
+
+        font-size: 8px;
+    }
+
+    #button {
+        text-align: center;
+    }
+}
+@media only screen and (min-width: 601px) and (max-width:797px ) {
+    body {
+        background-image: url("searchbackground.png");
+        font-family: 'Raleway', Arial, sans-serif;
+        margin: 0;
+        background-size: cover;
+    }
+
+    button, input, b {
+        font-family: 'Raleway', Arial, sans-serif;
+    }
+
+    #login {
+        text-align: center;
+        background-color: var(--primary);
+        overflow: hidden;
+        margin: 0;
+    }
+
+    .text {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 15px;
+        letter-spacing: 0.6px;
+        word-spacing: 2px;
+        text-align: justify;
+
+
+    }
+
+    #id2 {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 15px;
+        letter-spacing: 0.6px;
+        word-spacing: 2px;
+        text-align: center;
+
+    }
+
+    .container {
+        display: block;
+        text-align: center;
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        background-color: var(--secondary);
+        padding: 0 75px 15px;
+
+    }
+
+
+    #area {
+        text-align: center;
+        padding: 8px 15px;
+        margin: 6px 0;
+        box-sizing: border-box;
+    }
+
+    .submitbutton {
+
+        font-size: 10px;
+    }
+
+    #button {
+        text-align: center;
+    }
+}
+@media only screen and (min-width: 798px) {
+    body {
+        background-image: url("searchbackground.png");
+        font-family: 'Raleway', Arial, sans-serif;
+        margin: 0;
+        background-size: cover;
+    }
+
+    button, input, b {
+        font-family: 'Raleway', Arial, sans-serif;
+    }
+
+    #login {
+        text-align: center;
+        background-color: var(--primary);
+        overflow: hidden;
+        margin: 0;
+    }
+
+    .text {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        letter-spacing: 0.6px;
+        word-spacing: 2px;
+        text-align: justify;
+
+
+    }
+
+    #id2 {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: 20px;
+        letter-spacing: 0.6px;
+        word-spacing: 2px;
+        text-align: center;
+
+    }
+
+    .container {
+        display: block;
+        text-align: center;
+        margin: 0;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        -ms-transform: translate(-50%, -50%);
+        transform: translate(-50%, -50%);
+        background-color: var(--secondary);
+        padding: 0 100px 20px;
+
+    }
+
+
+    #area {
+        text-align: center;
+        padding: 12px 20px;
+        margin: 8px 0;
+        box-sizing: border-box;
+    }
+
+    .submitbutton {
+
+        font-size: 16px;
+    }
+
+    #button {
+        text-align: center;
+    }
+}
